@@ -1,0 +1,147 @@
+package com.coffeeManagementSystem.coffeeManagementSystem;
+import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Random;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import org.springframework.boot.SpringApplication;
+
+  public class SignUpView extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField userNameText;
+	private JTextField emailText;
+	private JTextField passwordText;
+	private JTextField otpText;
+
+	/**
+	 * Launch the application.
+	 */
+	
+	static int otp;
+	public static String emailAdd;
+
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					SignUpView frame = new SignUpView();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public SignUpView() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 828, 517);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel userNameLabel = new JLabel("User Name");
+		userNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		userNameLabel.setBounds(101, 71, 104, 33);
+		contentPane.add(userNameLabel);
+		
+		JLabel emailLabel = new JLabel("Email");
+		emailLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		emailLabel.setBounds(101, 205, 104, 33);
+		contentPane.add(emailLabel);
+		
+		JLabel passwordLabel = new JLabel("Password");
+		passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		passwordLabel.setBounds(101, 142, 109, 33);
+		contentPane.add(passwordLabel);
+		
+		userNameText = new JTextField();
+		userNameText.setBounds(216, 71, 391, 33);
+		contentPane.add(userNameText);
+		userNameText.setColumns(10);
+		
+		emailText = new JTextField();
+		emailText.setBounds(215, 203, 302, 38);
+		contentPane.add(emailText);
+		emailText.setColumns(10);
+		
+		passwordText = new JTextField();
+		passwordText.setBounds(216, 140, 391, 38);
+		contentPane.add(passwordText);
+		passwordText.setColumns(10);
+		
+		JLabel sendOTPLabel = new JLabel("Send OTP");
+		sendOTPLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Random random = new Random();
+				int min = 100000;
+				int max = 999999;
+				otp = random.nextInt(max - min)+ min;
+				emailAdd = emailText.getText();
+				SpringApplication.run(SendMailApplicaton.class,new String[0]);
+				JOptionPane.showMessageDialog(null,"OTP send, Please check your email");
+			}
+		});
+		sendOTPLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		sendOTPLabel.setBounds(527, 205, 81, 43);
+		contentPane.add(sendOTPLabel);
+		
+		JLabel otpLabel = new JLabel("OTP");
+		otpLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		otpLabel.setBounds(111, 248, 104, 38);
+		contentPane.add(otpLabel);
+		
+		otpText = new JTextField();
+		otpText.setBounds(216, 248, 302, 43);
+		contentPane.add(otpText);
+		otpText.setColumns(10);
+		
+		JLabel verifyLabel = new JLabel("Verify");
+		verifyLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int otp2 =Integer.valueOf(otpText.getText()); 
+				
+				if(otp== otp2) {
+					JOptionPane.showMessageDialog(null,	"Verify Complete");
+				}else {
+					JOptionPane.showMessageDialog(null, "Wrong OTP");
+					 
+				}
+			}
+			
+		});
+		verifyLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		verifyLabel.setBounds(537, 258, 81, 33);
+		contentPane.add(verifyLabel);
+		
+		JLabel signUpLabel = new JLabel("Sign Up");
+		signUpLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		signUpLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		signUpLabel.setBounds(299, 332, 116, 33);
+		contentPane.add(signUpLabel);
+	}
+
+}
